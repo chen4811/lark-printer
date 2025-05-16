@@ -1,0 +1,33 @@
+body {
+  width: 100%;
+}
+
+.el-page-header__back {
+  display: none !important;
+}
+
+.first-level {
+  background-color: #ecf5ff !important;
+}
+
+.first-level > el-button {
+  background-color: #f2f6ff !important;
+}
+
+.el-card__body {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-top: 5px !important;
+  padding-right: 5px !important;
+}
+
+.template-field-hr {
+  border: none;
+  border-top: 2px solid #ccc; /* 這是 "格線" 效果 */
+  margin: 0;
+  padding: 0;
+}
+
+.template-field {
+  max-width: fit-content !important;
+}

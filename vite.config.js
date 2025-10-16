@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/lark-base-printer/',
+  base: command === 'serve' ? '/' : '/lark-printer/',
   server: {
     host: true,
     port: 8000

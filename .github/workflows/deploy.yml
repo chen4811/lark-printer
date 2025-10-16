@@ -45,12 +45,12 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages  # 显式指定部署目标分支
-          publish_dir: ./dist       # 构建输出目录
-          # 可选：添加提交信息
-          commit_message: ${{ github.event.head_commit.message }}
-          # 可选：部署前清空目标分支
-          force_orphan: true
-          # 可选：添加自定义域名（如果需要）
-          # cname: example.com
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}  # 替换为个人令牌
+        publish_branch: gh-pages
+        publish_dir: ./dist
+        # 可选：添加提交信息
+        commit_message: ${{ github.event.head_commit.message }}
+        # 可选：部署前清空目标分支
+        force_orphan: true
+        # 可选：添加自定义域名（如果需要）
+        # cname: example.com

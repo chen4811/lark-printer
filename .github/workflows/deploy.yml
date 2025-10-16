@@ -2,55 +2,54 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['main']  # 监听main分支推送
+    branches: ['main']  # 监听 main 分支推送
   schedule:
-    - cron: "0 2 * * *"  # 每日UTC 2点定时部署（北京时间10点）
-  workflow_dispatch:  # 支持手动触发
+    - cron: "0 2 * * *"  # 每日 UTC 2 点自动部署（北京时间 10 点）
+  workflow_dispatch:  # 允许手动触发部署
 
 permissions:
   contents: read       # 仅读取代码权限
-  pages: write         # 写入Pages资源权限
+  pages: write         # 写入 Pages 资源权限
   id-token: write      # 生成身份令牌权限
 
 concurrency:
-  group: 'pages'       # 并发控制组名
-  cancel-in-progress: true  # 取消正在进行的旧任务
+  group: 'pages'
+  cancel-in-progress: true  # 取消正在进行的旧部署任务
 
 jobs:
   build-and-deploy:
     environment:
-      name: github-pages  # 关联GitHub Pages环境
-      url: ${{ steps.deployment.outputs.page_url }}  # 输出部署URL
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}  # 输出部署后的页面 URL
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整提交历史
+          fetch-depth: 0  # 获取完整提交历史，确保构建时版本信息正确
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # 匹配项目Node版本
-          cache: 'npm'        # 自动缓存npm依赖
+          node-version: '20'  # 匹配 Vite 推荐的 Node 版本
+          cache: 'npm'        # 自动缓存 npm 依赖，加速安装
 
       - name: Install dependencies
-        run: npm ci  # 严格按package-lock.json安装依赖
+        run: npm ci  # 严格按照 package-lock.json 安装依赖，确保版本一致
 
-      - name: Build project
-        run: npm run build-only  # 执行项目构建命令
+      - name: Build Vite project
+        run: npm run build  # 使用项目中实际存在的 build 脚本（对应 vite build）
         env:
-          NODE_ENV: production  # 生产环境构建
+          NODE_ENV: production  # 生产环境构建，启用代码压缩等优化
 
       - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4  # 官方Pages配置工具
+        uses: actions/configure-pages@v4  # 官方 Pages 环境配置工具
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'  # 构建产物目录，根据项目实际情况调整
+          path: './dist'  # Vite 默认构建输出目录，与你的项目一致
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # 官方部署工具
-    
+        uses: actions/deploy-pages@v4  # 官方部署工具，确保权限无虞

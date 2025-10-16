@@ -7,7 +7,7 @@ export default defineConfig({
   base: command === 'serve' ? '/' : '/lark-printer/',
   server: {
     host: true,
-    port: 8000
+    port: 5155
   },
   plugins: [vue()],
   resolve: {

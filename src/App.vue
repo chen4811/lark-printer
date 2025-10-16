@@ -8,7 +8,7 @@
       <div class="content-wrapper">
         <LarkFieldsList v-if="isEdited" :editorInstance="editorInstance" :isOpen="isOpenDrawer" />
         <div class="editor-container" :class="{ 'full-width': !isEdited }">
-          <Editor id="editor" tinymce-script-src="/lark-base-printer/tinymce/tinymce.min.js" :init="editorConfig"
+          <Editor id="editor" tinymce-script-src="/tinymce/tinymce.min.js" :init="editorConfig"
             v-model="content" />
         </div>
         <PrintSettingsDialog :visible="isPrintSettingsVisible" :settings="printSettings"
@@ -62,6 +62,8 @@ export default {
     editorConfig() {
       return {
         language: "zh_CN",
+        base_url: '/tinymce/',
+        suffix: '.min',
         // 启用的插件
         plugins: "image table preview autoresize fullscreen print insertdatetime",
         // 隐藏菜单栏

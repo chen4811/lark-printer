@@ -65,7 +65,7 @@ export default {
         base_url: '/tinymce/',
         suffix: '.min',
         // 启用的插件
-        plugins: "image table preview autoresize fullscreen print insertdatetime",
+        plugins: "image table preview autoresize fullscreen insertdatetime",
         // 隐藏菜单栏
         menubar: false,
         // 隐藏状态栏

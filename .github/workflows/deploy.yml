@@ -25,11 +25,11 @@ jobs:
         uses: strumwolf/delete-deployment-environment@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          environment: github-pages  # 仅清理目标环境的旧部署
+          environment: github-pages  # 仅清理目标环境旧部署
           onlyRemoveDeployments: true
 
   build-and-deploy:
-    environment:  # 统一指定环境为 github-pages
+    environment:  # 明确指定部署环境为 github-pages
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
@@ -64,6 +64,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        # 明确指定环境（部分Action需要显式传递）
         with:
-          environment: github-pages
+          environment: github-pages  # 显式传递环境参数（关键！）

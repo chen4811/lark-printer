@@ -15,19 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cleanup:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - name: Delete old deployments
-        uses: strumwolf/delete-deployment-environment@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          environment: github-pages  # 只清理 github-pages 环境
-          onlyRemoveDeployments: true
-
   build-and-deploy:
-    environment: github-pages  # 统一指定环境为 github-pages（关键修改）
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -58,6 +46,4 @@ jobs:
           path: './dist'
 
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
-        # 移除这里的 environment 参数，避免重复指定
